@@ -40,7 +40,7 @@ function time(ms) {
 }
 
 function updateClock() {
-    ms += 1;
+    ms += 10;
     document.getElementById("timer").innerHTML = time(ms);
 }
 

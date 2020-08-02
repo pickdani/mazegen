@@ -1,29 +1,33 @@
 let board = []
 let canvas = document.getElementById("mazeCanvas")
 let drawing = canvas.getContext("2d")
+drawing.globalCompositeOperation = "destination-over"
 const width = height = 20
 let size = canvas.width / width
-canvas.onmousemove = trackMouse;
-let start = false;
-let timer;
-let ms = 0;
+canvas.onmousemove = trackMouse
+let start = false
+let timer
+let ms = 0
+let startTime
+let won = false
 
 function trackMouse(event) {
     let x = event.pageX - 20;
     let y = event.pageY - 15;
     if (Math.floor(y / size) <= 19 && Math.floor(y / size) >= 0
-        && Math.floor(x / size) <= 19 && Math.floor(x / size) >= 0) {
+        && Math.floor(x / size) <= 19 && Math.floor(x / size) >= 0 && !won) {
         let currCell = board[Math.floor(y / size)][Math.floor(x / size)]
-        if ((currCell.r == 0 && currCell.c == 0) && !start) {
-            startClock();
-            start = true;
-        }
         let prevCell = drawStack.pop()
         let neighbors = prevCell.getValidNeighbors()
         if (neighbors.includes(currCell)) {
-            console.log(currCell.r + ", " + currCell.c);
+            if (!start) {
+                startTime = Date.now();
+                startClock();
+                start = true;
+            }
             if (currCell.r == 19 && currCell.c == 19) {
                 window.clearInterval(timer);
+                won = true;
             }
             currCell.fillCell("green")
             drawStack.pop()
@@ -33,20 +37,6 @@ function trackMouse(event) {
             drawStack.push(prevCell)
         }
     }
-}
-
-function time(ms) {
-    return new Date(ms).toISOString().slice(11, -1);
-}
-
-function updateClock() {
-    ms += 1;
-    document.getElementById("timer").innerHTML = time(ms);
-}
-
-function startClock() {
-    timer = window.setInterval("updateClock()", 1);
-    console.log(timer);
 }
 
 initBoard()

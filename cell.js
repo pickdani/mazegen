@@ -39,6 +39,7 @@ class Cell {
         drawing.globalAlpha = 0.2;
         drawing.fillRect(x + 10, y + 10, size - 20, size - 20)
         drawing.globalAlpha = 1;
+
         this.filled = false;
     }
 

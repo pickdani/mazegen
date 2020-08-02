@@ -1,7 +1,6 @@
 let board = []
 let canvas = document.getElementById("mazeCanvas")
 let drawing = canvas.getContext("2d")
-drawing.globalCompositeOperation = "destination-over"
 const width = height = 20
 let size = canvas.width / width
 canvas.onmousemove = trackMouse
@@ -37,6 +36,12 @@ function trackMouse(event) {
             drawStack.push(prevCell)
         }
     }
+}
+
+function hsv2rgb(h,s,v)
+{
+    let f= (n,k=(n+h/60)%6) => v - v*s*Math.max( Math.min(k,4-k,1), 0);
+    return [f(5),f(3),f(1)];
 }
 
 initBoard()

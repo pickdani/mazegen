@@ -1,3 +1,6 @@
+let fillColor
+let trailColor = [255, 255, 255]
+
 class Cell {
     constructor(r, c) {
         this.r = r
@@ -25,9 +28,10 @@ class Cell {
     }
 
     fillCell(color) {
+        fillColor = color
         let x = this.c * size
         let y = this.r * size
-        drawing.fillStyle = color
+        drawing.fillStyle = fillColor
         drawing.fillRect(x + 2, y + 2, size - 4, size - 4)
         this.filled = true;
     }
@@ -36,10 +40,19 @@ class Cell {
         let x = this.c * size
         let y = this.r * size
         drawing.clearRect(x + 2, y + 2, size - 4, size - 4)
-        drawing.globalAlpha = 0.2;
-        drawing.fillRect(x + 10, y + 10, size - 20, size - 20)
-        drawing.globalAlpha = 1;
 
+        // color gradient trail
+        drawing.fillStyle = 'rgb('
+            + trailColor[0] + ','
+            + trailColor[1] + ','
+            + trailColor[2] + ')';
+        drawing.fillRect(x + 10, y + 10, size - 20, size - 20)
+        trailColor = [
+            trailColor[0] - 1.5,
+            trailColor[1] - 1.5,
+            trailColor[2] - 1.5,]
+        console.log(trailColor)
+        drawing.fillStyle = fillColor
         this.filled = false;
     }
 

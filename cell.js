@@ -7,6 +7,8 @@ class Cell {
         this.c = c
         this.visited = false
         this.up = this.down = this.left = this.right = true
+        this.dist = -1
+        this.pred = -1
     }
 
     drawCell() {
@@ -51,9 +53,7 @@ class Cell {
             trailColor[0] - 1.5,
             trailColor[1] - 1.5,
             trailColor[2] - 1.5,]
-        console.log(trailColor)
         drawing.fillStyle = fillColor
-        this.filled = false;
     }
 
     removeWall(direction) {
